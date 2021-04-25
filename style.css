@@ -4,14 +4,19 @@ body {
     background-color: black;
 }
 .wrapper {
-    margin-top: 100px;
     height: 100%;
     width: 100%;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
 }
 .wrapper > canvas {
     border: 5px solid rgb(212, 0, 255);
     border-radius: 20px;
+}
+#score {
+    color: #fff;
+    margin: 0 0 0 0;
+    font-size: 1.875em;
+    font-family: "Zen Dots", cursive;
+    text-align: center;
 }

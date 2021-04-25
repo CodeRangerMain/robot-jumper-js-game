@@ -20,6 +20,7 @@ let enemyDronY = 70;
 let score = 0;
 let gameSpeed = 10;
 let bgSpeed = 6;
+let bestScore = document.getElementById('score')
 
 
 bg.src = 'img/Bg.png';
@@ -27,7 +28,12 @@ player.src = 'img/RobotPlayer.png';
 enemyDog.src = 'img/DogEnemy.png';
 enemyDron.src = 'img/drone.png'
 hpPoint.src = 'img/HP.png';
-
+// Проверяем локальное хранилище
+if (localStorage.getItem('bestScoreV') === null) {
+    bestScore.textContent = 'Best SCORE: 0'
+}
+// Записываем в 'BEST SCORE' значение из локального хранилища
+bestScore.textContent = 'Best SCORE: ' + localStorage.getItem('bestScoreV')
 let hps = [
     {
         drawHps: () => { cxt.drawImage(hpPoint, 700, 15) }
@@ -78,8 +84,6 @@ function drawGame() {
         cxt.drawImage(bg, bgX + 950, 0)
         cxt.drawImage(enemyDog, enemyDogX, enemyDogY);
         cxt.drawImage(enemyDron, enemyDronX, enemyDronY, 128, 128);
-
-
     }
     //Спавн врагов и фона(необходим для перехода)
     if (bgX <= -950) {
@@ -90,10 +94,7 @@ function drawGame() {
         cxt.drawImage(bg, bgX + 950, 0)
         cxt.drawImage(enemyDog, enemyDogX, enemyDogY);
         cxt.drawImage(enemyDron, enemyDronX, enemyDronY, 128, 128);
-
-
     }
-
     // Движение объектов
     bgX = bgX - bgSpeed
     enemyDogX = enemyDogX - gameSpeed
@@ -103,18 +104,17 @@ function drawGame() {
     if (enemyDogX === playerXPos && enemyDogY - 40 === playerYPos
         || enemyDogX - 100 === playerXPos && enemyDogY - 40 === playerYPos
         || enemyDogX + 100 === playerXPos && enemyDogY - 40 === playerYPos) {
-        console.log('game over')
+        // - 1 жизнь
         hps.pop()
         enemyDogX = enemyDogX - 200
-
     }
-    // Хитбокс протиника (Дрон)
+    // Хитбокс протиника (Дрон) (Пока прицип DRY)
     if (enemyDronX === playerXPos && enemyDronY >= playerYPos
         || enemyDronX - 80 === playerXPos && enemyDronY >= playerYPos
         || enemyDronX + 80 === playerXPos && enemyDronY >= playerYPos) {
-        console.log('game over')
-        enemyDronX = enemyDronX - 200
+        // - 1 жизнь и сокрытие врага в хитбокс которого 
         hps.pop()
+        enemyDronX = enemyDronX - 200
     }
     // Начисление очков
     if (enemyDronX == 20
@@ -127,16 +127,21 @@ function drawGame() {
         bgSpeed = 12;
     }
     for (let i = 0; i < hps.length; i++) {
-
         hps[i].drawHps()
     }
+    // Проверяем колличество HP в массиве
     if (hps.length === 0) {
+        // Проверяем результаты
+        if (score > localStorage.getItem('bestScoreV')) {
+            // Если результат больше того что мы имеем, то записываем его в локал
+            localStorage.setItem('bestScoreV', score);
+        }
+        // Если HP пустой, перезагружаем сцену
         document.location.reload()
     }
 
     //Отрисовка счета и персонажа
     cxt.fillText('Score: ' + score, 705, 110)
-
     cxt.drawImage(player, playerXPos, playerYPos, playerWidth, playerHeight)
     if (hps.length > 0) {
         requestAnimationFrame(drawGame)
