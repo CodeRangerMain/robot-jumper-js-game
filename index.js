@@ -85,7 +85,6 @@ document.addEventListener('keydown', (evt) => {
 document.addEventListener('click', (evt) => {
     evt.preventDefault()
     if (screen.width < 550) {
-        evt.preventDefault()
         jump()
     }
 })
