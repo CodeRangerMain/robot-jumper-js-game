@@ -32,8 +32,11 @@ hpPoint.src = 'img/HP.png';
 if (localStorage.getItem('bestScoreV') === null) {
     bestScore.textContent = 'Best SCORE: 0'
 }
-// Записываем в 'BEST SCORE' значение из локального хранилища
-bestScore.textContent = 'Best SCORE: ' + localStorage.getItem('bestScoreV')
+else {
+    // Записываем в 'BEST SCORE' значение из локального хранилища
+    bestScore.textContent = 'Best SCORE: ' + localStorage.getItem('bestScoreV')
+}
+
 let hps = [
     {
         drawHps: () => { cxt.drawImage(hpPoint, 700, 15) }
