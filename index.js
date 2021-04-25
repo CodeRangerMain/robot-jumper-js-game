@@ -138,8 +138,9 @@ function drawGame() {
     cxt.fillText('Score: ' + score, 705, 110)
 
     cxt.drawImage(player, playerXPos, playerYPos, playerWidth, playerHeight)
-
-    requestAnimationFrame(drawGame)
+    if (hps.length > 0) {
+        requestAnimationFrame(drawGame)
+    }
 }
 //Проверка готовности всех вайлов и запуск игры
 player.onload = drawGame()
