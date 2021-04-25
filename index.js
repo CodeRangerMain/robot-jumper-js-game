@@ -69,14 +69,25 @@ function jump() {
     }, 20);
 }
 
-// Вызов прыжка
+// Вызов прыжка на десктопе
 document.addEventListener('keydown', (evt) => {
     evt.preventDefault()
     if (evt.keyCode === 32) {
-        jump()
+        if (screen.width > 550) {
+            jump()
+
+        }
     }
 
 
+})
+// Вызов прыжка на телефоне
+document.addEventListener('click', (evt) => {
+    evt.preventDefault()
+    if (screen.width < 550) {
+        evt.preventDefault()
+        jump()
+    }
 })
 // Функция отрисовки
 function drawGame() {
