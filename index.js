@@ -47,14 +47,16 @@ let hps = [
     {
         drawHps: () => { cxt.drawImage(hpPoint, 830, 15) }
     }
-]
-
+]// Проверка (Происходит ли прыжок)
+let isJump = false
 // Прыжок
 function jump() {
     // Анимация прыжка
+    if (isJump) { return }
     let moveUp = setInterval(() => {
         if (playerYPos <= 300 && playerYPos > 50) {
             playerYPos -= 30
+            isJump = true
         }
         else {
             clearInterval(moveUp)
@@ -63,6 +65,7 @@ function jump() {
                 if (playerYPos >= 300) {
                     playerYPos = 300
                     clearInterval(moveDown)
+                    isJump = false
                 }
             }, 20);
         }
