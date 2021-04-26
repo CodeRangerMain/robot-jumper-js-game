@@ -54,12 +54,12 @@ function jump() {
     // Анимация прыжка
     let moveUp = setInterval(() => {
         if (playerYPos <= 300 && playerYPos > 50) {
-            playerYPos = playerYPos - 30
+            playerYPos -= 30
         }
         else {
             clearInterval(moveUp)
             let moveDown = setInterval(() => {
-                playerYPos = playerYPos + 15
+                playerYPos += 15
                 if (playerYPos >= 300) {
                     playerYPos = 300
                     clearInterval(moveDown)
@@ -75,11 +75,8 @@ document.addEventListener('keydown', (evt) => {
     if (evt.keyCode === 32) {
         if (screen.width > 550) {
             jump()
-
         }
     }
-
-
 })
 // Вызов прыжка на телефоне
 document.addEventListener('click', (evt) => {
@@ -109,9 +106,9 @@ function drawGame() {
         cxt.drawImage(enemyDron, enemyDronX, enemyDronY, 128, 128);
     }
     // Движение объектов
-    bgX = bgX - bgSpeed
-    enemyDogX = enemyDogX - gameSpeed
-    enemyDronX = enemyDronX - gameSpeed
+    bgX -= bgSpeed
+    enemyDogX -= gameSpeed
+    enemyDronX -= gameSpeed
 
     // Хитбокс протиника (Собака)
     if (enemyDogX === playerXPos && enemyDogY - 40 === playerYPos
@@ -119,7 +116,7 @@ function drawGame() {
         || enemyDogX + 100 === playerXPos && enemyDogY - 40 === playerYPos) {
         // - 1 жизнь
         hps.pop()
-        enemyDogX = enemyDogX - 200
+        enemyDogX -= 200
     }
     // Хитбокс протиника (Дрон) (Пока прицип DRY)
     if (enemyDronX === playerXPos && enemyDronY >= playerYPos
@@ -127,7 +124,7 @@ function drawGame() {
         || enemyDronX + 80 === playerXPos && enemyDronY >= playerYPos) {
         // - 1 жизнь и сокрытие врага в хитбокс которого 
         hps.pop()
-        enemyDronX = enemyDronX - 200
+        enemyDronX -= 200
     }
     // Начисление очков
     if (enemyDronX == 20
